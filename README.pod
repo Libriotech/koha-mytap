@@ -1,0 +1,64 @@
+=pod
+
+=head1 koha-mytap
+
+Helpers for running MyTAP against a Koha database.
+
+=head1 USAGE
+
+To create tests, based on the standard kohastructure.sql found on your system:
+
+  $ perl create_tests.pl
+
+To run the tests against a given instance:
+
+  $ sudo ./koha-mytap <instance>
+
+=head1 SETUP
+
+Running the tests relies on having the root password of MySQL in your local 
+F<~/.my.cnf> file. It should look something like this:
+
+  [client]
+  user = root
+  password = xyz
+  host = localhost
+
+Make sure this file is only readable by you!
+
+  $ chmod 0600 ~/.my.cnf
+
+=head1 PREREQUISITES
+
+You need to install the following for this to work:
+
+=over 4
+
+=item * A Koha installation based on the Debian packages
+
+=item * B<MyTAP> from L<https://github.com/hepabolu/mytap>
+
+=item * B<my_prove> from L<TAP::Parser::SourceHandler::MyTAP>
+
+=back
+
+=head1 TODO
+
+=head2 tap.col_has_type
+
+Add a check for column types, something like this:
+
+SELECT tap.col_has_type( DATABASE(), '[% table %]', '[% col.name %]', '[% col.type %]', '[% table %].[% col.name %] has type [% col.type %]' );
+
+Adding this results in lots of errors. Need to investigate more what format
+tap.col_has_type expects the types to be in.
+
+=head1 LICENSE
+
+See the LICENSE file.
+
+=head1 AUTHOR
+
+Magnus Enger magnus@libriotech.no
+
+=cut

@@ -1,0 +1,17 @@
+-- Start a transaction.
+BEGIN;
+
+-- Plan the tests.
+SELECT tap.plan([% cols.size + 1 %]);
+
+-- Run the tests.
+SELECT tap.has_table( DATABASE(), '[% table %]', 'Found table [% table %]' );
+
+[%- FOREACH col IN cols %]
+SELECT tap.has_column( DATABASE(), '[% table %]', '[% col.name %]', 'Found column [% col.name %]' );
+[%- END -%]
+
+-- Finish the tests and clean up.
+CALL tap.finish();
+
+ROLLBACK;
